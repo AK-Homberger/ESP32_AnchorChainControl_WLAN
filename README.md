@@ -15,5 +15,3 @@ This picture shows the interface for a positive signal (+12 V):
 This picture shows the interface for an Open Collector output whicht take the signal to GNG:
 
 ![Picture3](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/ESP32ChainCounterWLAN_OC.png)
-
-
