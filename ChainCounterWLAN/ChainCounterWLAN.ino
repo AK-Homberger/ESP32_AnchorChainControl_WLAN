@@ -24,7 +24,7 @@ WebServer server(80);
 
 // Chain Counter
 
-#define Chain_Calibration_Value 0.2 // Translates Counter impuls to meter 0,2 m per pulse
+#define Chain_Calibration_Value 0.33 // Translates Counter impuls to meter 0,2 m per pulse
 #define Chain_Counter_Pin 32  // counter impulse is measured as interrupt on pin 18
 unsigned long Last_int_time = 0;
 unsigned long ChainCounter = 0;
