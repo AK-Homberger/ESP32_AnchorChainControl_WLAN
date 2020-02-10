@@ -7,7 +7,12 @@ Set Chain_Calibration_Value according to your sensor (e.g. 0.33. meter per event
 
 ![Picture1](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/ESP32ChainCounterWLAN.png)
 
+This picture shows the interface for a positive signal (+12 V):
+
 ![Picture2](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/IMG_1250.PNG)
 
+This picture shows the interface for an Open Collector output whicht take the signal to GNG:
 
-Here is a KiCad schematics as PDF ![Schematics](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/ESP32ChainCounterWLAN.pdf)
+![Picture3](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/ESP32ChainCounterWLAN_OC.png)
+
+
