@@ -30,7 +30,7 @@ if (window.XMLHttpRequest) { // Mozilla, Safari,...
     }
   myAjax.onreadystatechange=LesenAjax;  
 }
- 
+
  function aktualisieren()
 { 
 
@@ -46,7 +46,7 @@ myAjax.open("GET",Url+"ADC.txt",true);
 myAjax.send();
    }
 }
- 
+
  function LesenAjax() 
 {
       if (myAjax.readyState==4 && myAjax.status==200)
@@ -58,6 +58,22 @@ Gauge.Collection.get('gauge1').setValue(Temp);
 document.getElementById('Online').style.background = "#ddd";
     }
 }
+
+
+function key(key)
+{ 
+  if (!myAjax) 
+  {
+    return false;
+  } 
+  else 
+  {  
+  
+  myAjax.open("GET",Url+key,true);
+  myAjax.send();
+   }
+}
+
 </script>
 
 <style type="text/css">
@@ -100,7 +116,7 @@ width: 20px;
 </head><body>
 <div id="wrap">
 <div class="Form-Einstellungen">
-Gauge for Chain Lenghth
+Gauge for Chain Length
       <div id="Online">   &ensp;</div>
 </div>
 <div class="Anzeige">      
@@ -120,11 +136,36 @@ data-animation-duration="2000"
 data-animation-fn="bounce" 
 data-colors-needle="#f00 #00f" 
 data-highlights="30 40 #0f0 40 50 #f00" 
-
 data-onready="setInterval(aktualisieren,500);"
 ></canvas><br>
 </div>
 </div>
+<style>
+.button {
+  background-color: #e7e7e7;
+  border-radius: 1px;
+  border: none;
+  color: black;
+  padding: 30px 50px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 22px;
+  margin: 2px 1px;
+  cursor: pointer;
+}
+</style>
+<div style="text-align:center"
+<p> </p>
+<form>
+<input type="button" class="button" value="Down" onclick="key('down')"> 
+<input type="button" class="button" value="Stop" onclick="key('stop')"> 
+<input type="button" class="button" value="Up" onclick="key('up')"> 
+<p> </p>
+<input type="button" class="button" value="Reset" onclick="key('reset')">
+</form>
+</div>
+
 </body>
 </html>
 )=====" ;

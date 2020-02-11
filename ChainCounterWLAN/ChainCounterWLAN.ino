@@ -13,7 +13,7 @@
 */
 
 // Chain Counter WLAN. Counts events on GPIO 32 and shows it in Web Gauge via WLAN
-// Version 0.1, 10.02.2020, AK-Homberger
+// Version 0.2, 10.02.2020, AK-Homberger
 
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -24,12 +24,18 @@ WebServer server(80);
 
 // Chain Counter
 
-#define Chain_Calibration_Value 0.33 // Translates Counter impuls to meter 0,2 m per pulse
+#define Chain_Calibration_Value 0.33 // Translates counter impuls to meter 0,33 m per pulse
 #define Chain_Counter_Pin 32  // counter impulse is measured as interrupt on pin 32
 unsigned long Last_int_time = 0;
-unsigned long ChainCounter = 0;
+int ChainCounter = 0;
+int UpDown=1; // 1 =  Chain down / count up, -1 = Chain up / count backwards
 portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;  
 
+
+// Relais
+
+#define Chain_Up_Pin 14
+#define Chain_Down_Pin 12
 
 void debug_log(char* str) {
 #if ENABLE_DEBUG_LOG == 1
@@ -44,7 +50,7 @@ void IRAM_ATTR handleInterrupt() {
 
   if (millis() > Last_int_time + 10) {  // Debouncing
     portENTER_CRITICAL_ISR(&mux);
-    ChainCounter++;
+    ChainCounter+=UpDown;
     portEXIT_CRITICAL_ISR(&mux);
   }
   Last_int_time = millis();
@@ -53,10 +59,15 @@ void IRAM_ATTR handleInterrupt() {
 
 
 void setup() {
+  
+  // Ralais output
+  pinMode(Chain_Up_Pin, OUTPUT);                                            // sets pin 
+  pinMode(Chain_Down_Pin, OUTPUT);                                          // sets pin high
+  digitalWrite(Chain_Up_Pin, LOW );
+  digitalWrite(Chain_Down_Pin, LOW );
 
   // Init Chain Count measure with interrupt
-
-  pinMode(Chain_Counter_Pin, INPUT_PULLUP);                                            // sets pin high
+  pinMode(Chain_Counter_Pin, INPUT_PULLUP);                                 // sets pin input with pullup 
   attachInterrupt(digitalPinToInterrupt(Chain_Counter_Pin), handleInterrupt, FALLING); // attaches pin to interrupt on Falling Edge
 
   // Init serial
@@ -75,11 +86,48 @@ void setup() {
   server.on("/", Ereignis_Index);
   server.on("/gauge.min.js", Ereignis_js);
   server.on("/ADC.txt", Ereignis_ChainCount);
+  server.on("/up", Ereignis_Up);
+  server.on("/down", Ereignis_Down);
+  server.on("/stop", Ereignis_Stop);
+  server.on("/reset", Ereignis_Reset);
+  
   server.onNotFound(handleNotFound);
 
   server.begin();
   Serial.println("HTTP Server gestarted");
 }
+
+
+void Ereignis_Up(){
+  Ereignis_ChainCount();
+  Serial.println("Up");
+  digitalWrite(Chain_Up_Pin, HIGH );
+  digitalWrite(Chain_Down_Pin, LOW );
+  UpDown=-1;
+}
+
+
+void Ereignis_Down(){
+  Ereignis_ChainCount();
+  Serial.println("Down");
+  digitalWrite(Chain_Up_Pin, LOW );
+  digitalWrite(Chain_Down_Pin, HIGH );
+  UpDown=1;
+}
+
+void Ereignis_Stop(){
+  Ereignis_ChainCount();
+  Serial.println("Stop");
+  digitalWrite(Chain_Up_Pin, LOW );
+  digitalWrite(Chain_Down_Pin, LOW );
+}
+
+void Ereignis_Reset(){
+  ChainCounter=0;
+  Ereignis_ChainCount();
+  Serial.println("Reset");
+}
+
 
 
 void Ereignis_Index()    // Wenn "http://<ip address>/" aufgerufen wurde
