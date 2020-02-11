@@ -18,5 +18,5 @@ To control the anchor chain relay just press:
 
 ![Picture1](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/ESP32ChainCounterWLAN_OC_Relais.png)
 
-The current design works for a Quick / Lofrans anchor chain relay and chain sensor (which which looks like simple reed relay triggerd from a magnet).
+The current design should work for a Quick or Lofrans anchor chain relay and chain sensor (which which looks like simple reed relay triggerd from a magnet).
 
