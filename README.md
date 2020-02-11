@@ -1,7 +1,7 @@
 # ESP32 Anchor Chain Remote Contol / Counter via WLAN
 
 This repository shows how to remotely control the achor chain relais via WLAN from phone/tablet.
-Anchor chain events are measured and presented on the phone/tablet.
+Anchor chain events from the chain sensor are measured and presented on the phone/tablet.
 
 Just set the AP name and password according to your needs. 
 Set Chain_Calibration_Value according to your sensor (e.g. 0.33. meter per event).
