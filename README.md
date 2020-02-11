@@ -1,6 +1,6 @@
 # ESP32 Anchor Chain Remote Contol / Counter via WLAN
 
-This repository shows how to remotely control the achor chain relais via WLAN from phone/tablet.
+This repository shows how to remotely control the achor chain relay via WLAN from phone/tablet.
 Anchor chain events from the chain sensor are measured and presented on the phone/tablet.
 
 Just set the AP name and password according to your needs. 
@@ -18,5 +18,5 @@ To control the anchor chain relay just press:
 
 ![Picture1](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/ESP32ChainCounterWLAN_OC_Relais.png)
 
-The current design works for a Quick anchor chain relais and chain sensor (which which looks like simple reed relais triggerd from a magnet).
+The current design works for a Quick anchor chain relay and chain sensor (which which looks like simple reed relay triggerd from a magnet).
 
