@@ -16,8 +16,6 @@ To control the anchor chain relay just press:
 - "Stop" for Stop
 - "Reset" to reset the chain counter to zero
 
-This picture shows the interface for an Open Collector output whicht take the signal to GNG:
-
 ![Picture1](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/ESP32ChainCounterWLAN_OC_Relais.png)
 
 The current design works for a Quick anchor chain relais and chain monitor (which is open collectot and taks the output to GND).
