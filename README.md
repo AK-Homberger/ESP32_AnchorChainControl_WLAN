@@ -1,4 +1,4 @@
-# ESP32 Anchor Chain Counter via WLAN
+# ESP32 Anchor Chain Remote Contol / Counter via WLAN
 
 This repository shows how to remotely control the achor chain relais via WLAN from phone/tablet.
 Anchor chain events are measured and presented on the phone/tablet.
