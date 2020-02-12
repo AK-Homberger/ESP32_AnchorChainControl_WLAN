@@ -20,8 +20,8 @@ Features:
 - Saftey stop to stop "anchor up" two events before reaching zero (can be changed in code with SAFETY_STOP).
 - Watchdog timer to stop power after 1 second inactivity of client (e.g. due to connection problems).
 - Watchdog timer to detect blocking chain. Engine stops if no events are detected within 1 second for up/down command.
-- Current Chain Counter is stored in nonvolatile memeory. ESP32 can be switched off after anchoring (restored after new start)
-- Demo mode to check functionality without having a windlass / chain counter connected to ESP32 (set ENABLE_DEMO to 1)
+- Current Chain Counter is stored in nonvolatile memory. ESP32 can be switched off after anchoring (counter is restored after new start).
+- Demo mode to check functionality without having a windlass / chain counter connected to ESP32 (set ENABLE_DEMO to 1).
 
 ![Picture1](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/ESP32ChainCounterWLAN_OC_Relais.png)
 
