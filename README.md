@@ -16,7 +16,7 @@ To control the anchor chain relay just press:
 - "Stop" for Stop
 - "Reset" to reset the chain counter to zero
 
-# Features:
+Features:
 - Saftey stop to stop acnchor up two events before zero (can be changed in code with SAFETY_STOP).
 - Watchdog timer to stop power after 1 second inactivity of client e.g. due to connection problems.
 - Watchdog timer to detect blocking chain. Engine stops if no events are detected within 1 second for up/down command.
@@ -27,7 +27,7 @@ To control the anchor chain relay just press:
 
 The current design should work for a Quick or Lofrans anchor chain relay and chain sensor (which which looks like simple reed relay triggerd from a magnet).
 
-# History:
+History:
 12.02.2020 - Version 0.3: Added watchdog timer, safety stop and demo mode
 11.02.2020 - Version 0.1: Initial version
 
