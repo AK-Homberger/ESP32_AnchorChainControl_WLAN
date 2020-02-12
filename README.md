@@ -17,8 +17,8 @@ To control the anchor chain relay just press:
 - "Reset" to reset the chain counter to zero
 
 Features:
-- Saftey stop to stop acnchor up two events before zero (can be changed in code with SAFETY_STOP).
-- Watchdog timer to stop power after 1 second inactivity of client e.g. due to connection problems.
+- Saftey stop to stop "anchor up" two events before reaching zero (can be changed in code with SAFETY_STOP).
+- Watchdog timer to stop power after 1 second inactivity of client (e.g. due to connection problems).
 - Watchdog timer to detect blocking chain. Engine stops if no events are detected within 1 second for up/down command.
 - Current Chain Counter is stored in nonvolatile memeory. ESP32 can be switched off after anchoring (restored after new start)
 - Demo mode to check functionality without having a windlass / chain counter connected to ESP32 (set ENABLE_DEMO to 1)
