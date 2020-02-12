@@ -33,18 +33,19 @@ Preferences preferences;             // Nonvolatile storage on ESP32 - To store 
 #define Chain_Calibration_Value 0.33 // Translates counter impuls to meter 0,33 m per pulse
 #define Chain_Counter_Pin 32         // counter impulse is measured as interrupt on pin 32
 unsigned long Last_int_time = 0;     // Time of last interrupt
-unsigned long Last_event_time = 0;        // Time of last event for engine watchdog
-int ChainCounter = 0;                // Conter for chain events
-int LastSavedCounter = 0;            // Stores last ChainCounter saves to nonvolatile storag
-int UpDown = 1;                      // 1 =  Chain down / count up, -1 = Chain up / count backwards
-int OnOff = 0;                       // Relay On/Off - Off = 0;
-unsigned long Watchdog_Timer = 0;    // Watchdog timer to stop relay aftre 1 second inactivity e.g. connection loss to client
+unsigned long Last_event_time = 0;   // Time of last event for engine watchdog
+int ChainCounter = 0;                // Counter for chain events
+int LastSavedCounter = 0;            // Stores last ChainCounter value to allow storage to nonvolatile storage in case of value changes
 portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;  // To lock/unlock interrupt
 
 // Relay
 
 #define Chain_Up_Pin 14              // GPIO Pin 14 for Chain Up Relay
 #define Chain_Down_Pin 12            // GPIO Pin 14 for Chain Down Relay
+int UpDown = 1;                      // 1 =  Chain down / count up, -1 = Chain up / count backwards
+int OnOff = 0;                       // Relay On/Off - Off = 0, On =1
+unsigned long Watchdog_Timer = 0;    // Watchdog timer to stop relay aftre 1 second inactivity e.g. connection loss to client
+
 
 
 // Chain Event Interrupt
@@ -90,14 +91,14 @@ void setup() {
 
   preferences.begin("nvs", false);                  // Open nonvolatile storage (nvs)
   ChainCounter = preferences.getInt("counter", 0);  // Read last saved counter
-  LastSavedCounter = ChainCounter;                  
+  LastSavedCounter = ChainCounter;                  // Initialise Last counter value
   preferences.end();                                // Close nvs
 
   // Init WLAN AP
   WiFi.mode(WIFI_AP);
   delay(100);
   
-  WiFi.softAP("chaincount", "kette0102"); // AP name and password. Chang to your needs
+  WiFi.softAP("chaincount", "kette0102"); // AP name and password. Change to your needs
   
   Serial.println("Starte AP  Chaincounter");
   Serial.print("IP Adresse ");
@@ -182,7 +183,7 @@ void Ereignis_ChainCount() {    // Wenn "http://<ip address>/ADC.txt" aufgerufen
   
   if (OnOff == 1) ChainCounter += UpDown; 
 
-  if ( (ChainCounter == SAFETY_STOP) && (UpDown == -1) && (OnOff == 1) ) {  // Safety stop
+  if ( (ChainCounter == SAFETY_STOP) && (UpDown == -1) && (OnOff == 1) ) {  // Safety stop counter reached while chain is going up
   digitalWrite(Chain_Up_Pin, LOW );
     digitalWrite(Chain_Down_Pin, LOW );
     OnOff = 0;
@@ -223,5 +224,4 @@ void loop() {
   if ( Serial.available() ) {
     Serial.read();
   }
-
 }
