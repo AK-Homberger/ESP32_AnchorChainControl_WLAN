@@ -29,5 +29,6 @@ The current design should work for a Quick or Lofrans anchor chain relay and cha
 
 History:
 12.02.2020 - Version 0.3: Added watchdog timer, safety stop and demo mode
+
 11.02.2020 - Version 0.1: Initial version
 
