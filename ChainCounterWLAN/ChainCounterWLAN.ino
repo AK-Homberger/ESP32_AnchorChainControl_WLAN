@@ -1,4 +1,4 @@
-/*
+*
   This code is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
   License as published by the Free Software Foundation; either
@@ -25,13 +25,15 @@
 #define ENABLE_DEMO 1                // Set to 1 to enable Demo Mode with up/down counter
 #define SAFETY_STOP 2                // Defines safety stop for chain up. Stops defined number of events before reaching zero
 
-WebServer server(80);                // Web Server at port 80
-Preferences preferences;             // Nonvolatile storage on ESP32 - To store ChainCounter
-
 // Chain Counter
-
 #define Chain_Calibration_Value 0.33 // Translates counter impuls to meter 0,33 m per pulse
 #define Chain_Counter_Pin 32         // counter impulse is measured as interrupt on pin 32
+
+// Relay
+#define Chain_Up_Pin 14              // GPIO Pin 14 for Chain Up Relay
+#define Chain_Down_Pin 12            // GPIO Pin 14 for Chain Down Relay
+
+
 unsigned long Last_int_time = 0;     // Time of last interrupt
 unsigned long Last_event_time = 0;        // Time of last event for engine watchdog
 int ChainCounter = 0;                // Conter for chain events
@@ -40,12 +42,15 @@ int UpDown = 1;                      // 1 =  Chain down / count up, -1 = Chain u
 int OnOff = 0;                       // Relay On/Off - Off = 0;
 unsigned long Watchdog_Timer = 0;    // Watchdog timer to stop relay aftre 1 second inactivity e.g. connection loss to client
 portMUX_TYPE mux = portMUX_INITIALIZER_UNLOCKED;  // To lock/unlock interrupt
+unsigned long serspeed = 115200;
 
-// Relay
+//SSID of your network
+char ssid[] = "WEINERT";
+char pass[] = "sysquadratm.weinert1970test";
+int wificlient = 1;                   // Wifi as Client or AP
 
-#define Chain_Up_Pin 14              // GPIO Pin 14 for Chain Up Relay
-#define Chain_Down_Pin 12            // GPIO Pin 14 for Chain Down Relay
-
+WebServer server(80);                // Web Server at port 80
+Preferences preferences;             // Nonvolatile storage on ESP32 - To store ChainCounter
 
 // Chain Event Interrupt
 // Enters on falling edge
@@ -84,7 +89,7 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(Chain_Counter_Pin), handleInterrupt, FALLING); // attaches pin to interrupt on Falling Edge
 
   // Init serial
-  Serial.begin(115200);
+  Serial.begin(serspeed);
   Serial.print("");
   Serial.println("Start");
 
@@ -94,10 +99,15 @@ void setup() {
   preferences.end();                                // Close nvs
 
   // Init WLAN AP
-  WiFi.mode(WIFI_AP);
-  delay(100);
-  
-  WiFi.softAP("chaincount", "kette0102"); // AP name and password. Chang to your needs
+  if ( wificlient = 0 ) { 
+    WiFi.mode(WIFI_AP);
+    delay(100);
+    WiFi.softAP(ssid, pass); 
+  } else {
+    WiFi.mode(WIFI_STA);
+    delay(100);
+    WiFi.begin(ssid, pass);
+  }
   
   Serial.println("Starte AP  Chaincounter");
   Serial.print("IP Adresse ");
@@ -183,9 +193,9 @@ void Ereignis_ChainCount() {    // Wenn "http://<ip address>/ADC.txt" aufgerufen
   if (OnOff == 1) ChainCounter += UpDown; 
 
   if ( (ChainCounter == SAFETY_STOP) && (UpDown == -1) && (OnOff == 1) ) {  // Safety stop
-  digitalWrite(Chain_Up_Pin, LOW );
-    digitalWrite(Chain_Down_Pin, LOW );
-    OnOff = 0;
+      digitalWrite(Chain_Up_Pin, LOW );
+      digitalWrite(Chain_Down_Pin, LOW );
+      OnOff = 0;
   }
   Last_event_time = millis();
 #endif
