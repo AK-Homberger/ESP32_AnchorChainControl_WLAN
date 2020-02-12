@@ -13,7 +13,7 @@
 */
 
 // Anchor Chain Remote Control / Chain Counter with WLAN.
-// Version 0.3, 12.02.2020, AK-Homberger
+// Version 0.4, 12.02.2020, AK-Homberger
 
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -217,8 +217,6 @@ void loop() {
     LastSavedCounter = ChainCounter;
     preferences.end();
   }
-
-  delay(50);
 
   // Dummy to empty input buffer to avoid board to stuck with e.g. NMEA Reader
   if ( Serial.available() ) {
