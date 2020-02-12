@@ -54,12 +54,12 @@ unsigned long Watchdog_Timer = 0;    // Watchdog timer to stop relay aftre 1 sec
 void IRAM_ATTR handleInterrupt() {
 
   if (millis() > Last_int_time + 10) {  // Debouncing. No new events for 10 Milliseconds
-    
+
     portENTER_CRITICAL_ISR(&mux);
 
     ChainCounter += UpDown;             // Chain Even: Count up/down
     if ( (ChainCounter == SAFETY_STOP) && (UpDown == -1) && (OnOff == 1) ) {  // Safety stop
-    digitalWrite(Chain_Up_Pin, LOW );
+      digitalWrite(Chain_Up_Pin, LOW );
       digitalWrite(Chain_Down_Pin, LOW );
       OnOff = 0;
     }
@@ -97,16 +97,16 @@ void setup() {
   // Init WLAN AP
   WiFi.mode(WIFI_AP);
   delay(100);
-  
+
   WiFi.softAP("chaincount", "kette0102"); // AP name and password. Change to your needs
-  
+
   Serial.println("Starte AP  Chaincounter");
   Serial.print("IP Adresse ");
   Serial.println(WiFi.softAPIP());
 
-  
+
   // Handle HTTP request events
-  
+
   server.on("/", Ereignis_Index);
   server.on("/gauge.min.js", Ereignis_js);
   server.on("/ADC.txt", Ereignis_ChainCount);
@@ -125,9 +125,9 @@ void setup() {
 void Ereignis_Up() {                  // Handle UP request
   Ereignis_ChainCount();              // Send response
   Serial.println("Up");
-  digitalWrite(Chain_Up_Pin, HIGH );  
+  digitalWrite(Chain_Up_Pin, HIGH );
   digitalWrite(Chain_Down_Pin, LOW );
-  Last_event_time = millis();         
+  Last_event_time = millis();
   UpDown = -1;
   OnOff = 1;
 }
@@ -180,11 +180,11 @@ void Ereignis_ChainCount() {    // Wenn "http://<ip address>/ADC.txt" aufgerufen
 
 
 #if ENABLE_DEMO == 1                   // Demo Mode - Counts automatically UP/Down every 500 ms
-  
-  if (OnOff == 1) ChainCounter += UpDown; 
+
+  if (OnOff == 1) ChainCounter += UpDown;
 
   if ( (ChainCounter == SAFETY_STOP) && (UpDown == -1) && (OnOff == 1) ) {  // Safety stop counter reached while chain is going up
-  digitalWrite(Chain_Up_Pin, LOW );
+    digitalWrite(Chain_Up_Pin, LOW );
     digitalWrite(Chain_Down_Pin, LOW );
     OnOff = 0;
   }
@@ -201,17 +201,17 @@ void handleNotFound() {
 
 void loop() {
 
-  server.handleClient();                                        // Handle HTTP requests
+  server.handleClient();                                           // Handle HTTP requests
 
-  if ( (millis() > Watchdog_Timer + 1000) ||                    // Check connnection
-       (OnOff == 1 && (millis() > Last_event_time + 1000)) )  { // Check events if engine is on
+  if ( ( millis() > Watchdog_Timer + 1000 ) ||                     // Check connnection
+       ( (OnOff == 1) && (millis() > Last_event_time + 1000)) )  { // Check events if engine is on
 
-    digitalWrite(Chain_Up_Pin, LOW );                           // Relay off after 1 second inactivity
+    digitalWrite(Chain_Up_Pin, LOW );                              // Relay off after 1 second inactivity
     digitalWrite(Chain_Down_Pin, LOW );
     OnOff = 0;
   }
 
-  if (ChainCounter != LastSavedCounter) {                       // Store Chain Counter to nonvolatile storage (if changed)
+  if (ChainCounter != LastSavedCounter) {                          // Store Chain Counter to nonvolatile storage (if changed)
     preferences.begin("nvs", false);
     preferences.putInt("counter", ChainCounter);
     LastSavedCounter = ChainCounter;
