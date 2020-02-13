@@ -21,7 +21,7 @@ To control the anchor chain relay just press:
 
 Features:
 - Saftey stop to stop "anchor up" two events before reaching zero (can be changed in code with SAFETY_STOP).
-- Safety stop if maximum chain lenght is reached (standard 40 meters, can be changed withg MAX_CHAIN_LENGTH)
+- Safety stop if maximum chain lenght is reached (standard 40 meters, can be changed with MAX_CHAIN_LENGTH)
 - Watchdog timer to stop power after 1 second inactivity of client (e.g. due to connection problems).
 - Watchdog timer to detect blocking chain. Engine stops if no events are detected within 1 second for up/down command.
 - Current Chain Counter is stored in nonvolatile memory. ESP32 can be switched off after anchoring (counter is restored after new start).
