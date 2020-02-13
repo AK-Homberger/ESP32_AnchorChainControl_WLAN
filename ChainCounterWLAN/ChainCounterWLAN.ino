@@ -13,7 +13,7 @@
 */
 
 // Anchor Chain Remote Control / Chain Counter with WLAN.
-// Version 0.5, 13.02.2020, AK-Homberger
+// Version 0.6, 13.02.2020, AK-Homberger
 
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -24,7 +24,7 @@
 
 #define ENABLE_DEMO 1                // Set to 1 to enable Demo Mode with up/down counter
 #define SAFETY_STOP 2                // Defines safety stop for chain up. Stops defined number of events before reaching zero
-
+#define MAX_CHAIN_LENGTH 40          // Define maximum chan length. Relay off after the value is reached
 
 // Wifi: Select AP or Client
 
@@ -66,7 +66,10 @@ void IRAM_ATTR handleInterrupt() {
     portENTER_CRITICAL_ISR(&mux);
 
     ChainCounter += UpDown;             // Chain event: Count up/down
-    if ( (ChainCounter == SAFETY_STOP) && (UpDown == -1) && (OnOff == 1) ) {  // Safety stop
+
+    if ( ( (ChainCounter <= SAFETY_STOP) && (UpDown == -1) && (OnOff == 1) ) ||     // Safety stop counter reached while chain is going up
+         ( (UpDown == 1) && (abs(ChainCounter) * Chain_Calibration_Value >= MAX_CHAIN_LENGTH) ) ) {  // Maximum chain lenght reached
+
       digitalWrite(Chain_Up_Pin, LOW );
       digitalWrite(Chain_Down_Pin, LOW );
       OnOff = 0;
@@ -104,7 +107,7 @@ void setup() {
   preferences.end();                                // Close nvs
 
   // Init WLAN AP
-  if (WiFiMode_AP_STA == 0) { 
+  if (WiFiMode_AP_STA == 0) {
 
     WiFi.mode(WIFI_AP);                              // WiFi Mode Access Point
     delay (100);
@@ -122,10 +125,10 @@ void setup() {
       wifi_retry++;
       delay(500);
       Serial.print(".");
-      if (wifi_retry >10) {
+      if (wifi_retry > 10) {
         Serial.println("\nReboot");                   // Reboot after 10 connection tries
         ESP.restart();
-      }  
+      }
     }
 
     Serial.println("");
@@ -214,7 +217,9 @@ void Event_ChainCount() {                    // If  "http://<ip address>/ADC.txt
 
   if (OnOff == 1) ChainCounter += UpDown;
 
-  if ( (ChainCounter == SAFETY_STOP) && (UpDown == -1) && (OnOff == 1) ) {  // Safety stop counter reached while chain is going up
+  if ( ( (ChainCounter <= SAFETY_STOP) && (UpDown == -1) && (OnOff == 1) ) ||     // Safety stop counter reached while chain is going up
+       ( (UpDown == 1) && (abs(ChainCounter) * Chain_Calibration_Value >= MAX_CHAIN_LENGTH) ) ) {  // Maximum chain lenght reached
+
     digitalWrite(Chain_Up_Pin, LOW );
     digitalWrite(Chain_Down_Pin, LOW );
     OnOff = 0;
@@ -251,7 +256,7 @@ void loop() {
   }
 
   if (WiFiMode_AP_STA == 1) {                                      // Check connection if working as client
-    
+
     while (WiFi.status() != WL_CONNECTED && wifi_retry < 5 ) {     // Connection lost, 5 tries to reconnect
       wifi_retry++;
       Serial.println("WiFi not connected. Try to reconnect");
