@@ -9,7 +9,7 @@ Select WLAN type with setting WiFiMode_AP_STA to "0" means Acess Point, or "1" m
 Also set Chain_Calibration_Value according to your sensor (e.g. 0.33. meter per event).
 
 If working as Access Point connect the phone/tablet to the defined AP and start "192.168.4.1" in the browser.
-If working as WLAN client check the DHCP IP wit Serial Monito of IDE and connect to the shown IP.
+If working as WLAN client, check the DHCP IP with Serial Monitor of IDE and start browser with the shown IP address.
 
 ![Picture2](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/IMG_1252.PNG)
 
