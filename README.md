@@ -4,7 +4,8 @@ This repository shows how to remotely control the achor chain relay via WLAN fro
 Anchor chain events from the chain sensor are measured and presented on the phone/tablet.
 
 Just set the WLAN ssid and password according to your needs. 
-Select WLAN type with setting WiFiMode_AP_STA to "0" means Acess Point, or "1" means Client with DHCP
+Select WLAN type with setting WiFiMode_AP_STA to "0" means Acess Point, or "1" means Client with DHCP.
+
 Also set Chain_Calibration_Value according to your sensor (e.g. 0.33. meter per event).
 
 If working as Access Point connect the phone/tablet to the defined AP and start "192.168.4.1" in the browser.
