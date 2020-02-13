@@ -164,7 +164,7 @@ void Event_Up() {                  // Handle UP request
 }
 
 
-void Event_Down() {                  // Handle UP request
+void Event_Down() {                  // Handle Down request
   Event_ChainCount();                // Send response
   Serial.println("Down");
   digitalWrite(Chain_Up_Pin, LOW );
@@ -174,7 +174,7 @@ void Event_Down() {                  // Handle UP request
   OnOff = 1;
 }
 
-void Event_Stop() {                   // Handle Stop reques
+void Event_Stop() {                   // Handle Stop request
   Event_ChainCount();                 // Send response
   Serial.println("Stop");
   digitalWrite(Chain_Up_Pin, LOW );
