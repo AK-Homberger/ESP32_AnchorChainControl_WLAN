@@ -33,7 +33,7 @@ The current design should work for a Quick or Lofrans anchor chain relay and cha
 
 History:
 
-13.02.2020 - Version 0.6: Added maximum chain lenght function
+13.02.2020 - Version 0.6: Added maximum chain lenght function.
 
 13.02.2020 - Version 0.5: Added WLAN selection (AP / Client) and WLAN reconnect.
 
