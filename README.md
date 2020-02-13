@@ -3,10 +3,12 @@
 This repository shows how to remotely control the achor chain relay via WLAN from phone/tablet.
 Anchor chain events from the chain sensor are measured and presented on the phone/tablet.
 
-Just set the AP name and password according to your needs. 
-Set Chain_Calibration_Value according to your sensor (e.g. 0.33. meter per event).
+Just set the WLAN ssid and password according to your needs. 
+Select WLAN type with setting WiFiMode_AP_STA to "0" means Acess Point, or "1" means Client with DHCP
+Also set Chain_Calibration_Value according to your sensor (e.g. 0.33. meter per event).
 
-On the phone/tablet connect to the defined AP and start "192.168.4.1" in the browser.
+If working as Access Point connect the phone/tablet to the defined AP and start "192.168.4.1" in the browser.
+If working as WLAN client check the DHCP IP wit Serial Monito of IDE and connect to the shown IP.
 
 ![Picture2](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/IMG_1252.PNG)
 
@@ -28,6 +30,8 @@ Features:
 The current design should work for a Quick or Lofrans anchor chain relay and chain sensor (which looks like a simple reed relay triggerd from a magnet).
 
 History:
+
+13.02.2020 - Version 0.5: Added WLAN selection (AP / Client) and WLAN reconnect.
 
 12.02.2020 - Version 0.4: Deleted delay() in loop() to improve responsiveness of web server.
 
