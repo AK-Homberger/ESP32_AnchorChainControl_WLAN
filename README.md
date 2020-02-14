@@ -11,7 +11,7 @@ Also set Chain_Calibration_Value according to your sensor (e.g. 0.33. meter per 
 If working as Access Point connect the phone/tablet to the defined AP and start "192.168.4.1" in the browser.
 If working as WLAN client, check the DHCP IP with Serial Monitor of IDE and start browser with the shown IP address.
 
-![Picture1](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/IMG_1253.PNG)
+![Picture1](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/IMG_1254.PNG)
 
 To control the anchor chain relay just press:
 - "Down" for anchor down
