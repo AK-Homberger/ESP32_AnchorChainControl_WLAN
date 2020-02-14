@@ -11,7 +11,7 @@ Also set Chain_Calibration_Value according to your sensor (e.g. 0.33. meter per 
 If working as Access Point connect the phone/tablet to the defined AP and start "192.168.4.1" in the browser.
 If working as WLAN client, check the DHCP IP with Serial Monitor of IDE and start browser with the shown IP address.
 
-![Picture2](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/IMG_1252.PNG)
+![Picture1](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/IMG_1253.PNG)
 
 To control the anchor chain relay just press:
 - "Down" for anchor down
@@ -27,11 +27,13 @@ Features:
 - Current Chain Counter is stored in nonvolatile memory. ESP32 can be switched off after anchoring (counter is restored after new start).
 - Demo mode to check functionality without having a windlass / chain counter connected to ESP32 (set ENABLE_DEMO to 1).
 
-![Picture1](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/ESP32ChainCounterWLAN_OC_Relais.png)
+![Picture2](https://github.com/AK-Homberger/ESP32_ChainCounter_WLAN/blob/master/ESP32ChainCounterWLAN_OC_Relais.png)
 
 The current design should work for a Quick or Lofrans anchor chain relay and chain sensor (which looks like a simple reed relay triggerd from a magnet).
 
 History:
+
+14.02.2020 - Version 1.0: Changed web page layout.
 
 13.02.2020 - Version 0.6: Added maximum chain lenght function.
 
