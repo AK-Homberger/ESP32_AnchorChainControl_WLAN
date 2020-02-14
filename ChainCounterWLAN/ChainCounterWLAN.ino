@@ -13,7 +13,7 @@
 */
 
 // Anchor Chain Remote Control / Chain Counter with WLAN.
-// Version 0.6, 13.02.2020, AK-Homberger
+// Version 1.0, 14.02.2020, AK-Homberger
 
 #include <WiFi.h>
 #include <WiFiClient.h>
@@ -156,8 +156,8 @@ void setup() {
 }
 
 
-void Event_Up() {                  // Handle UP request
-  Event_ChainCount();              // Send response
+void Event_Up() {                          // Handle UP request
+  server.send(200, "text/plain", "-1000"); // Send response "-1000" means no  chainlenght
   Serial.println("Up");
   digitalWrite(Chain_Up_Pin, HIGH );
   digitalWrite(Chain_Down_Pin, LOW );
@@ -167,8 +167,8 @@ void Event_Up() {                  // Handle UP request
 }
 
 
-void Event_Down() {                  // Handle Down request
-  Event_ChainCount();                // Send response
+void Event_Down() {                         // Handle Down request
+  server.send(200, "text/plain", "-1000");  // Send response "-1000" means no  chainlenght
   Serial.println("Down");
   digitalWrite(Chain_Up_Pin, LOW );
   digitalWrite(Chain_Down_Pin, HIGH );
@@ -177,17 +177,17 @@ void Event_Down() {                  // Handle Down request
   OnOff = 1;
 }
 
-void Event_Stop() {                   // Handle Stop request
-  Event_ChainCount();                 // Send response
+void Event_Stop() {                         // Handle Stop request
+  server.send(200, "text/plain", "-1000");  // Send response "-1000" means no  chainlenght
   Serial.println("Stop");
   digitalWrite(Chain_Up_Pin, LOW );
   digitalWrite(Chain_Down_Pin, LOW );
   OnOff = 0;
 }
 
-void Event_Reset() {                  // Handle reset request to reset counter to 0
-  ChainCounter = 0;
-  Event_ChainCount();                 // Send response
+void Event_Reset() {                        // Handle reset request to reset counter to 0
+  ChainCounter = 0;                         
+  server.send(200, "text/plain", "-1000");  // Send response "-1000" means no  chainlenght
   Serial.println("Reset");
 }
 
@@ -229,7 +229,7 @@ void Event_ChainCount() {                    // If  "http://<ip address>/ADC.txt
 
 }
 
-void handleNotFound() {                       // Unknown request. Send error 404
+void handleNotFound() {                                           // Unknown request. Send error 404
   server.send(404, "text/plain", "File Not Found\n\n");
 }
 

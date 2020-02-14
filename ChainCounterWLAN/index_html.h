@@ -31,7 +31,7 @@ if (window.XMLHttpRequest) { // Mozilla, Safari,...
   myAjax.onreadystatechange=LesenAjax;  
 }
 
- function aktualisieren()
+function aktualisieren()
 { 
 
 document.getElementById('Online').style.background = "red";
@@ -42,20 +42,22 @@ document.getElementById('Online').style.background = "red";
   } 
   else 
   {  
-myAjax.open("GET",Url+"ADC.txt",true);
-myAjax.send();
-   }
+  myAjax.open("GET",Url+"ADC.txt",true);
+  myAjax.send();
+  }
 }
 
- function LesenAjax() 
+function LesenAjax() 
 {
-      if (myAjax.readyState==4 && myAjax.status==200)
+    if (myAjax.readyState==4 && myAjax.status==200)
     {
 
-var Temp=0.5;
-Temp = parseFloat (myAjax.responseText);
-Gauge.Collection.get('gauge1').setValue(Temp);
-document.getElementById('Online').style.background = "#ddd";
+    var Temp=0.5;
+    Temp = parseFloat (myAjax.responseText);
+    if (Temp != -1000) {   // response to button
+       Gauge.Collection.get('gauge1').setValue(Temp);
+       document.getElementById('Online').style.background = "#ddd";
+       }
     }
 }
 
@@ -83,7 +85,7 @@ text-align: center;
 vertical-align: middle; 
 max-width: 900px; 
 margin:0 auto;
-background:#dcd;
+background:rgb(200, 200, 200);
 border-radius: 10px;
 padding:10px;       /*innen*/
 }
@@ -112,15 +114,19 @@ border: 1px solid #666666;
 border-radius: 10px;
 width: 20px;
 }
+
+
+
+
 </style>
 </head><body>
 <div id="wrap">
 <div class="Form-Einstellungen">
 Gauge for Chain Length
-      <div id="Online">   &ensp;</div>
+<div id="Online">   &ensp;</div>
 </div>
 <div class="Anzeige">      
-<canvas id="gauge1" width="300" height="300" 
+<canvas id="gauge1" width="280" height="280" 
 data-type="canv-gauge" 
 data-title="Chain" 
 data-min-value="0" 
@@ -138,32 +144,34 @@ data-colors-needle="#f00 #00f"
 data-highlights="30 40 #0f0 40 50 #f00" 
 data-onready="setInterval(aktualisieren,500);"
 ></canvas><br>
-</div>
-</div>
+
 <style>
 .button {
   background-color: #e7e7e7;
   border-radius: 1px;
   border: none;
   color: black;
-  padding: 30px 50px;
+  padding: 8px 10px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 22px;
-  margin: 2px 1px;
+  font-size: 20px;
+  margin: 1px 2px;
   cursor: pointer;
 }
 </style>
+
+
 <div style="text-align:center"
-<p> </p>
 <form>
 <input type="button" class="button" value="Down" onclick="key('down')"> 
 <input type="button" class="button" value="Stop" onclick="key('stop')"> 
-<input type="button" class="button" value="Up" onclick="key('up')"> 
+<input type="button" class="button" value="  Up  " onclick="key('up')"> 
 <p> </p>
 <input type="button" class="button" value="Reset" onclick="key('reset')">
 </form>
+</div>
+</div>
 </div>
 
 </body>
