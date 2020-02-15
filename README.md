@@ -31,7 +31,7 @@ Features:
 
 The current design should work for a Quick or Lofrans anchor chain relay and chain sensor (which looks like a simple reed relay triggerd from a magnet).
 
-# Updates
+# Updates:
 
 14.02.2020 - Version 1.0: Changed web page layout.
 
