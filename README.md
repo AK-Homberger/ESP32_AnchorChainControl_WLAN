@@ -3,7 +3,7 @@
 This repository shows how to remotely control the achor chain relay via WLAN from phone/tablet.
 Anchor chain events from the chain sensor are measured and presented on the phone/tablet.
 
-# Pleaes have a look to the other repository with a port from this ESP32 based layout to a ESP8266 (D1 Mini) board. For the D1 mini a PCB is available also [Link]https://github.com/AK-Homberger/ESP8266_AnchorChainContol_WLAN.
+# Pleaes have a look to the other repository with a port from this ESP32 based layout to a ESP8266 (D1 Mini) board. For the D1 mini a PCB is available also [Link](https://github.com/AK-Homberger/ESP8266_AnchorChainContol_WLAN).
 
 Just set the WLAN ssid and password according to your needs. 
 Select WLAN type with setting WiFiMode_AP_STA to "0" means Acess Point, or "1" means Client with DHCP.
